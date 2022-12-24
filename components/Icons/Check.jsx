@@ -1,7 +1,7 @@
 import classNames from "classnames"
 const Check = (props) => {
   const { className, isChecked, ...otherProps } = props
-  console.log("isChecked", isChecked)
+
   return (
     <div>
       {isChecked ? (
