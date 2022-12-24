@@ -1,37 +1,39 @@
-import classnames from "classnames"
+import classNames from "classnames"
 import Button from "../ui/Button"
 import Plus from "../Icons/Plus"
+import context from "../../INITIAL_STATES/context"
+
+import { useContext } from "react"
+
 const TodosHeaders = (props) => {
   const { className, ...otherProps } = props
-  const todos = [
-    {
-      index: 0,
-      title: "title 1",
-      finishedTasks: 1,
-      totalTasks: 3,
-      tasks: [
-        { index: 0, description: "tasksTitle 1", isFinished: false },
-        { index: 1, description: "tasksTitle 2", isFinished: true },
-        { index: 2, description: "tasksTitle 3", isFinished: false },
-      ],
-    },
-    {
-      index: 1,
-      title: "title 2",
-      finishedTasks: 0,
-      totalTasks: 3,
-      tasks: [
-        { index: 0, description: "tasksTitle 1 todo 2", isFinished: false },
-        { index: 1, description: "tasksTitle 2 todo 2", isFinished: false },
-        { index: 2, description: "tasksTitle 3 todo 2", isFinished: false },
-      ],
-    },
-  ]
+  const values = useContext(context)
+  const { setIndex, todos, showAddTodosModal, setShowAddTodosModal } = values
+
+  const handleTodosChange = (e) => {
+    const todoIndex = e.currentTarget.getAttribute("data-todo-id")
+    setIndex(parseInt(todoIndex, 10))
+  }
+
+  const handleShowTodoModal = (e) => {
+    setShowAddTodosModal(true)
+  }
+
+  const todosData = Object.values(todos.todos)
+
   return (
     <nav className="border-b-2 flex flex-row">
       <div className="pl-2 w-5/6">
-        {todos.map((todo) => (
-          <Button className="border-x-2 relative mt-2 border-t-2 rounded-t-xl px-2 -ml-1 first:ml-0 h-100 bg-white">
+        {todosData.map((todo) => (
+          <Button
+            className={classNames(
+              "border-x-2 relative mt-2 border-t-2 rounded-t-xl px-2 -ml-1 first:ml-0 h-100 bg-white",
+              className
+            )}
+            key={todo.index + "." + todo.tasks.length}
+            data-todo-id={todo.index}
+            onClick={handleTodosChange}
+          >
             {todo.title}
             <span className="ml-2">
               {todo.finishedTasks > 0 ? (
@@ -47,7 +49,10 @@ const TodosHeaders = (props) => {
         ))}
       </div>
       <div className="pl-2 ">
-        <Button className="border-x-2 border-t-2 rounded-t-xl px-2 mt-3 -ml-1 first:ml-0 bg-white">
+        <Button
+          onClick={handleShowTodoModal}
+          className="border-x-2 border-t-2 rounded-t-xl px-2 mt-3 -ml-1 first:ml-0 bg-white"
+        >
           <Plus />
         </Button>
       </div>
