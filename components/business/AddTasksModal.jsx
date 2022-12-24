@@ -7,53 +7,52 @@ import { Formik, Form } from "formik"
 import * as Yup from "yup"
 import { useContext } from "react"
 
-const AddTodoModal = () => {
+const AddTasksModal = () => {
   const values = useContext(context)
-  const { showAddTodosModal, setShowAddTodosModal, todos, setTodos, setIndex } =
+  const { showAddTasksModal, setShowAddTasksModal, todos, setTodos, index } =
     values
+
   const initialValues = {
-    todoName: "",
+    taskName: "",
   }
-  console.log(showAddTodosModal)
+
   const validationSchema = Yup.object().shape({
-    todoName: Yup.string()
-      .min(5, "Todo name must be at least 5 characters long")
-      .max(15, "Todo name must be smaller than 16 characters"),
+    taskName: Yup.string()
+      .min(2, "Task name must be at least 5 characters long")
+      .max(55, "Task name must be smaller than 13 characters"),
   })
 
   const handleCloseModal = (e) => {
-    setShowAddTodosModal(false)
+    setShowAddTasksModal(false)
   }
 
   const handleSubmit = (values, { resetForm }) => {
-    console.log("todoName:", values.todoName)
-    const newTodo = {
-      index: todos.lastIndex + 1,
-      lastIndexTasks: 0,
-      title: values.todoName,
-      finishedTasks: 0,
-      totalTasks: 0,
-      tasks: {},
+    const todo = todos.todos[index]
+    todo.lastIndexTasks += 1
+    todo.totalTasks += 1
+    console.log(values.taskName)
+    todo.tasks[todo.lastIndexTasks] = {
+      index: todo.lastIndexTasks,
+      description: values.taskName,
+      isFinished: false,
     }
-    setTodos({
-      lastIndex: todos.lastIndex + 1,
+    setTodos((prevState) => ({
+      ...prevState,
       todos: {
-        ...todos.todos,
-        [todos.lastIndex + 1]: newTodo,
+        ...prevState.todos,
+        [index]: todo,
       },
-    })
+    }))
     resetForm()
-    setShowAddTodosModal(false)
-
-    setIndex(todos.lastIndex + 1)
+    handleCloseModal()
   }
 
   return (
     <div>
-      {showAddTodosModal ? (
+      {showAddTasksModal ? (
         <div className="fixed z-30 h-screen w-screen bg-white inset-0 overflow-hidden">
           <div className="flex flex-row items-center justify-between border-b-2 p-4 pr-10">
-            <p className="text-3xl font-extrabold">Create a new Todo list :</p>
+            <p className="text-3xl font-extrabold">Create a new Task :</p>
             <Button onClick={handleCloseModal}>
               <Close />
             </Button>
@@ -67,13 +66,13 @@ const AddTodoModal = () => {
               {({ values, errors, touched }) => (
                 <Form>
                   <Input
-                    label="TodoName"
-                    name="todoName"
+                    label="taskName"
+                    name="taskName"
                     placeholder="Enter todo name...."
                   />
-                  {errors.todoName && touched.todoName ? (
+                  {errors.taskName && touched.taskName ? (
                     <div className="text-red-500 font-medium italic text-md pl-4">
-                      {errors.todoName}
+                      {errors.taskName}
                     </div>
                   ) : null}
                   <div className="absolute right-11 bottom-11">
@@ -98,4 +97,4 @@ const AddTodoModal = () => {
   )
 }
 
-export default AddTodoModal
+export default AddTasksModal

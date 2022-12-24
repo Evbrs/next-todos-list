@@ -3,11 +3,22 @@ import Plus from "../Icons/Plus"
 import Edit from "../Icons/Edit"
 import Button from "../ui/Button"
 import Check from "../Icons/Check"
+import context from "../../INITIAL_STATES/context"
 
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 const ActionsHeader = () => {
-  let [isChecked, setIsChecked] = useState(true)
+  const values = useContext(context)
+  const {
+    isChecked,
+    setIsChecked,
+    index,
+    setIndex,
+    todos,
+    setTodos,
+    showAddTasksModal,
+    setShowAddTasksModal,
+  } = values
 
   const handleCheckClick = () => {
     if (isChecked) {
@@ -17,15 +28,26 @@ const ActionsHeader = () => {
     }
   }
 
+  const handleDeleteTodo = (e) => {
+    const updatedTodo = { ...todos }
+    delete updatedTodo.todos[index]
+    setIndex(index + 1)
+    setTodos(updatedTodo)
+  }
+
+  const handlePlusClick = () => {
+    setShowAddTasksModal(true)
+  }
+
   return (
     <div className="flex flex-row px-2 py-2 border-b-2">
-      <Button>
+      <Button onClick={handlePlusClick}>
         <Plus className="mx-2" />
       </Button>
       <Button>
         <Edit className="mx-2" />
       </Button>
-      <Button>
+      <Button onClick={handleDeleteTodo}>
         <Bin className="mx-2" />
       </Button>
       <Button onClick={handleCheckClick}>

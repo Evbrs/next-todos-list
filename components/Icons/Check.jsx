@@ -9,7 +9,7 @@ const Check = (props) => {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className={classNames("w-6 h-6", className)}
+          className={classNames("w-6 h-6 ", className)}
           {...otherProps}
         >
           <path
@@ -25,7 +25,7 @@ const Check = (props) => {
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className={classNames("w-6 h-6", className)}
+          className={classNames("w-6 h-6 ", className)}
           {...otherProps}
         >
           <path

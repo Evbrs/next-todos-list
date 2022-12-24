@@ -1,59 +1,29 @@
-import Close from "../Icons/Close"
-import Button from "../ui/Button"
-import context from "../../INITIAL_STATES/context"
-import Input from "../ui/InputField"
-
-import { Formik, Form } from "formik"
-import * as Yup from "yup"
-import { useContext } from "react"
-
-const AddTodoModal = () => {
+const EditModal = (props) => {
   const values = useContext(context)
-  const { showAddTodosModal, setShowAddTodosModal, todos, setTodos, setIndex } =
-    values
+  const { name } = props
+  const { showEditModal, setShowEditModal, todos, setTodos, setIndex } = values
   const initialValues = {
-    todoName: "",
+    Name: name,
   }
   console.log(showAddTodosModal)
   const validationSchema = Yup.object().shape({
-    todoName: Yup.string()
+    Name: Yup.string()
       .min(5, "Todo name must be at least 5 characters long")
-      .max(15, "Todo name must be smaller than 16 characters"),
+      .max(40, "Todo name must be smaller than 16 characters"),
   })
 
   const handleCloseModal = (e) => {
-    setShowAddTodosModal(false)
+    setShowEditModal(false)
   }
 
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("todoName:", values.todoName)
-    const newTodo = {
-      index: todos.lastIndex + 1,
-      lastIndexTasks: 0,
-      title: values.todoName,
-      finishedTasks: 0,
-      totalTasks: 0,
-      tasks: {},
-    }
-    setTodos({
-      lastIndex: todos.lastIndex + 1,
-      todos: {
-        ...todos.todos,
-        [todos.lastIndex + 1]: newTodo,
-      },
-    })
-    resetForm()
-    setShowAddTodosModal(false)
-
-    setIndex(todos.lastIndex + 1)
-  }
+  const handleSubmit = (values, { resetForm }) => {}
 
   return (
     <div>
-      {showAddTodosModal ? (
+      {showEditModal ? (
         <div className="fixed z-30 h-screen w-screen bg-white inset-0 overflow-hidden">
           <div className="flex flex-row items-center justify-between border-b-2 p-4 pr-10">
-            <p className="text-3xl font-extrabold">Create a new Todo list :</p>
+            <p className="text-3xl font-extrabold">Edit the name :</p>
             <Button onClick={handleCloseModal}>
               <Close />
             </Button>
@@ -67,13 +37,13 @@ const AddTodoModal = () => {
               {({ values, errors, touched }) => (
                 <Form>
                   <Input
-                    label="TodoName"
-                    name="todoName"
-                    placeholder="Enter todo name...."
+                    label="Name to edit"
+                    name="Name"
+                    placeholder="Enter name...."
                   />
-                  {errors.todoName && touched.todoName ? (
+                  {errors.Name && touched.Name ? (
                     <div className="text-red-500 font-medium italic text-md pl-4">
-                      {errors.todoName}
+                      {errors.Name}
                     </div>
                   ) : null}
                   <div className="absolute right-11 bottom-11">
@@ -98,4 +68,4 @@ const AddTodoModal = () => {
   )
 }
 
-export default AddTodoModal
+export default EditModal
