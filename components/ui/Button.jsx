@@ -1,13 +1,13 @@
 import classnames from "classnames"
 
 const variants = {
-  primary: "bg-blue-500 text-white",
+  primary: "text-black ",
   secondary: "bg-white text-black",
 }
 
 const sizes = {
   small: "py-1.5 px-2.5 text-sm",
-  medium: "py-2.5 px-4.5 text-md",
+  medium: "py-2.5 px-4.5 text-lg",
 }
 
 const Button = (props) => {
@@ -15,6 +15,7 @@ const Button = (props) => {
     className,
     variant = "primary",
     size = "medium",
+    children,
     ...otherProps
   } = props
 
@@ -22,7 +23,9 @@ const Button = (props) => {
     <button
       className={classnames(variants[variant], sizes[size], className)}
       {...otherProps}
-    />
+    >
+      {children}
+    </button>
   )
 }
 
