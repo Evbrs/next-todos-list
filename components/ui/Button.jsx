@@ -3,6 +3,9 @@ import classnames from "classnames"
 const variants = {
   primary: "text-black ",
   secondary: "bg-white text-black",
+  submit:
+    "rounded-md text-white border-2 py-3 px-4 border-blue-600 bg-blue-600",
+  cancel: "bg-white rounded-md border-2 py-3 px-4 border-slate-400",
 }
 
 const sizes = {
