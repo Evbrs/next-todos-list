@@ -5,8 +5,8 @@ module.exports = {
       index: 0,
       lastIndexTasks: 2,
       title: "title 1",
-      finishedTasks: 10,
-      totalTasks: 15,
+      finishedTasks: 3,
+      totalTasks: 4,
       tasks: {
         0: { index: 0, description: "tasksTitle 1", isFinished: true },
         1: { index: 1, description: "tasksTitle 2", isFinished: true },
