@@ -37,11 +37,7 @@ const List = (props) => {
 
   const handleDeleteTask = (e) => {
     const updatedTodo = { ...todos }
-    console.log("parent: ", e.target.parentNode)
     const taskIndex = e.target.parentNode.getAttribute("data-task-id")
-
-    console.log("task Index: ", taskIndex)
-    console.log(updatedTodo.todos[index].tasks[taskIndex])
 
     if (updatedTodo.todos[index].tasks[taskIndex].isFinished) {
       updatedTodo.todos[index].finishedTasks =
@@ -74,7 +70,6 @@ const List = (props) => {
     const checkboxState = e.target.checked
     const taskIndex =
       e.target.parentNode.parentNode.getAttribute("data-task-id")
-    console.log("show me : ", taskIndex)
     if (checkboxState) {
       updateFinishedStatus(index, taskIndex, true)
       return
